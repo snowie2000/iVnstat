@@ -165,7 +165,11 @@ func monitorUsage(iface string, nlimit int, scmd string) {
 
 		var q Vnstat
 		xml.Unmarshal([]byte(rawxml), &q)
-		return strconv.Atoi(q.Ifaces.Traffic.Total.Transfer)
+		if len(q.Ifaces.Traffic.Months.Month) > 0 {
+			return strconv.Atoi(q.Ifaces.Traffic.Months.Month[0].Transfer)
+		} else {
+			return 0, nil
+		}
 	}
 
 	cmdSlice := strings.Fields(scmd)
