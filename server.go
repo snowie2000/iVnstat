@@ -176,7 +176,13 @@ func monitorUsage(iface string, nlimit int, scmd string) {
 	cmdExe := cmdSlice[0]
 	cmdSlice = cmdSlice[1:]
 
+	if n, e := getTotalTransfer(); e == nil && n >= nlimit {
+		log.Println("Limit already exceeded, please change your limit. Monitor disabled.")
+		return
+	}
+
 	for {
+		time.Sleep(time.Minute * 5)
 		if n, e := getTotalTransfer(); e == nil && n >= nlimit {
 			log.Println("Bandwidth limit exceed")
 			out := exec.Command(cmdExe, cmdSlice...)
@@ -186,7 +192,6 @@ func monitorUsage(iface string, nlimit int, scmd string) {
 		} else {
 			log.Println("Current transfer:", float32(n)/1024/1024, "GiB")
 		}
-		time.Sleep(time.Minute * 5)
 	}
 }
 
@@ -198,13 +203,13 @@ func main() {
 	)
 
 	flag.StringVar(&iFace, "i", "", "monitored interface")
-	flag.IntVar(&nLimit, "l", 0x8FFFFFF, "Bandwidth usage limit (in GiB)")
+	flag.IntVar(&nLimit, "l", 0x8FFFFFFF, "Bandwidth usage limit (in GiB)")
 	flag.StringVar(&sCmd, "c", "shutdown", "Command to execute on exceed of bandwidth")
 	flag.Parse()
 
 	if iFace != "" {
 		// bandwidth monitoring enabled
-		log.Println("Starting monitor for", iFace, "with a limit of", nLimit, "GiB")
+		log.Println("Start monitoring for", iFace, "with a limit of", nLimit, "GiB")
 		go monitorUsage(iFace, nLimit*1024*1024, sCmd)
 	}
 	web.Get("/vnstat/(.*)/(.*)", vnstat)
