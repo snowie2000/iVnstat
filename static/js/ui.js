@@ -88,8 +88,8 @@ var views = {
         views.common(function(data) {
             data.Ifaces.Traffic.Months.Month.forEach(function(a, i) {
                 var x = new Date(a.DateVal.Year, a.DateVal.Month -1, 1);
-                chart.options.data[0].dataPoints.push({x: x, y: a.Receive/1024});
-                chart.options.data[1].dataPoints.push({x: x, y: a.Transfer/1024});
+                chart.options.data[0].dataPoints.push({x: x, y: Math.round(a.Receive/10.24)/100});
+                chart.options.data[1].dataPoints.push({x: x, y: Math.round(a.Transfer/10.24)/100});
             });
         });
     },
@@ -99,8 +99,8 @@ var views = {
         views.common(function(data) {
             data.Ifaces.Traffic.Days.Day.forEach(function(a, i) {
                 var x = new Date(a.DateVal.Year, a.DateVal.Month -1, a.DateVal.Day);
-                chart.options.data[0].dataPoints.push({x: x, y: a.Receive/1024});
-                chart.options.data[1].dataPoints.push({x: x, y: a.Transfer/1024});
+                chart.options.data[0].dataPoints.push({x: x, y: Math.round(a.Receive/10.24)/100});
+                chart.options.data[1].dataPoints.push({x: x, y: Math.round(a.Transfer/10.24)/100});
             });
         });
     },
@@ -110,8 +110,8 @@ var views = {
         views.common(function(data) {
             data.Ifaces.Traffic.Tops.Top.forEach(function(a, i) {
                 var x = new Date(a.DateVal.Year, a.DateVal.Month -1, a.DateVal.Day);
-                chart.options.data[0].dataPoints.push({x: x, y: a.Receive/1024});
-                chart.options.data[1].dataPoints.push({x: x, y: a.Transfer/1024});
+                chart.options.data[0].dataPoints.push({x: x, y: Math.round(a.Receive/10.24)/100});
+                chart.options.data[1].dataPoints.push({x: x, y: Math.round(a.Transfer/10.24)/100});
             });
         });
     },
@@ -121,8 +121,8 @@ var views = {
         views.common(function(data) {
             data.Ifaces.Traffic.Hours.Hour.forEach(function(a, i) {
                 var x = new Date(a.DateVal.Year, a.DateVal.Month -1, a.DateVal.Day, i);
-                chart.options.data[0].dataPoints.push({x: x, y: a.Receive/1024});
-                chart.options.data[1].dataPoints.push({x: x, y: a.Transfer/1024});
+                chart.options.data[0].dataPoints.push({x: x, y: Math.round(a.Receive/10.24)/100});
+                chart.options.data[1].dataPoints.push({x: x, y: Math.round(a.Transfer/10.24)/100});
             });
         });
     },
